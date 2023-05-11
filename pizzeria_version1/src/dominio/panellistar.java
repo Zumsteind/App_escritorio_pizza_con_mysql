@@ -8,11 +8,16 @@ import java.util.ArrayList;
 
 import javax.swing.JList;
 import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class panellistar extends JPanel {
 
 	private JList list;
-	private DefaultListModel<pizza> model;
+	private static DefaultListModel<pizza> model;
+	private JTextField txtbuscar;
 	/**
 	 * Create the panel.
 	 */
@@ -39,6 +44,32 @@ public class panellistar extends JPanel {
 		list.setModel(model);
 		
 		add(list);
+		
+		txtbuscar = new JTextField();
+		txtbuscar.setBounds(132, 78, 222, 20);
+		add(txtbuscar);
+		txtbuscar.setColumns(10);
+		txtbuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				model.clear();
+				pizzadao dato = new pizzadao();
+				pizza pizza = new pizza();
+				ArrayList<pizza> listapizza= dato.mostrarpizzaspornombre(txtbuscar.getText());
+				
+				for (pizza pizza2 : listapizza) {
+					model.addElement(pizza2);
+				}
+				add(list);
+				
+			}
+		});
+		
+		
+		JButton btnBuscar = new JButton("buscar");
+		btnBuscar.setBounds(364, 77, 89, 23);
+		add(btnBuscar);
 
 	}
 }
